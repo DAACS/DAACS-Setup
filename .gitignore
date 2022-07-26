@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+ssl/*
+archive/
+Backup/
+assessments/
+daacs-install/
