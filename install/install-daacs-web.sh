@@ -2,6 +2,7 @@
 
 ##### Web component
 figlet -t -k -f /usr/share/figlet/small.flf "Cloning DAACS-Web"
+sudo mkdir /usr/local/daacs
 cd /usr/local/daacs
 sudo git clone https://github.com/DAACS/DAACS-Web.git
 cd /usr/local/daacs/DAACS-Web/daacs

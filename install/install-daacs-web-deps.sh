@@ -9,6 +9,10 @@ sudo tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/
 sudo ln -s /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/
 phantomjs --version
 
+figlet -t -k -f /usr/share/figlet/small.flf "Installing Python 2"
+#Install Python
+sudo apt install python2.7
+
 figlet -t -k -f /usr/share/figlet/small.flf "Installing Node"
 # NodeJS
 curl -L https://www.npmjs.com/install.sh | sh

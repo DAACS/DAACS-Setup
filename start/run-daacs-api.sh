@@ -11,5 +11,4 @@ echo $daacsapiProperties
 figlet -t -k -f /usr/share/figlet/small.flf "Starting DAACS-API"
 sudo rm /usr/local/daacs/DAACS-API/nohup.out
 sudo bash -c 'echo > /usr/local/daacs/DAACS-API/nohup.out'
-nohup java -jar build/libs/daacsapi-dev.jar &
-tail -f /usr/local/daacs/DAACS-API/nohup.out & exit
+nohup java -jar build/libs/daacsapi-dev.jar >/usr/local/daacs/DAACS-API/nohup.out &
