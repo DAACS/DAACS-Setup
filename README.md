@@ -9,8 +9,8 @@ System requirements:
 
 This section will show how to setup a server on
 [DigitalOcean](https://digitalocean.com). If you are using another
-service (Amazon AWS, personal server, etc.), you can skip to the next
-section.
+service (Amazon AWS, personal server, etc.), you can [skip to the next
+section](#installing-daacs).
 
 Click Create -\> Droplets
 
@@ -82,17 +82,10 @@ cd /daacs
 git clone https://github.com/DAACS/DAACS-Setup.git .
 ```
 
-Install python (*note: this should be added to the installation
-scripts*)
-
-``` bash
-apt install python
-```
-
 Edit [`daacs.properties`](start/daacs.properties).
 
 ``` bash
-vi /daacs//start/daacs.properties
+vi /daacs/start/daacs.properties
 ```
 
 You can change the password for MongoDB in
