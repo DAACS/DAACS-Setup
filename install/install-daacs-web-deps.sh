@@ -12,6 +12,7 @@ phantomjs --version
 figlet -t -k -f /usr/share/figlet/small.flf "Installing Python 2"
 #Install Python
 sudo apt install python2.7
+ln -s /usr/bin/python2.7 /usr/bin/python
 
 figlet -t -k -f /usr/share/figlet/small.flf "Installing Node"
 # NodeJS
@@ -28,11 +29,11 @@ nvm install v8.16.0
 npm install -g npm@6.4.1
 node --version
 npm --version
-npm install -g core-js 
+npm install -g core-js
 figlet -t -k -f /usr/share/figlet/small.flf "Installing Ember"
 npm install -g ember-cli@2.6.1
 
 sudo chown -R $USER:$(id -gn $USER) /home/$USER/.config
-ember --version 
+ember --version
 npm install -g bower
 bower --version # 1.8.14
