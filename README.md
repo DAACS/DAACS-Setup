@@ -69,12 +69,16 @@ Click create droplet. This will start the server.
 
 ------------------------------------------------------------------------
 
+*For the remainder of this document we will use `IP_ADDRESS` and
+`DAACS_DOMAIN` to correspond to your server’s IP address and domain,
+respectively.*
+
 ## Installing DAACS
 
 Login to the Ubuntu server. Here, change `SSH_KEY` to the file created
-above and `XXX.XXX.XXX.XXX` to the IP address of your server.
+above and `IP_ADDRESS` to the IP address of your server.
 
-    ssh -i ssl/SSH_KEY root@XXX.XXX.XXX.XXX
+    ssh -i ssl/SSH_KEY root@IP_ADDRESS
 
 ``` bash
 mkdir /daacs
@@ -82,16 +86,37 @@ cd /daacs
 git clone https://github.com/DAACS/DAACS-Setup.git .
 ```
 
+Git should be already installed, if not you can install it using
+`sudo apt-get install -y git`.
+
 Edit [`daacs.properties`](start/daacs.properties).
 
 ``` bash
-vi /daacs/start/daacs.properties
+vi /daacs/config/daacs.properties
 ```
 
 You can change the password for MongoDB in
 [`start/daacs.properties`](start/daacs.properties) and
 [`install/mongo-user.script.js`](install/mongo-user.script.js). However,
 we recommend blocking access to the MongoDB to all IP addresses.
+
+Edit [`environment.js`](config/environment.js)
+
+To whitelist a hostname for the web component, update the environment.js
+file and add the IP address and domain to the `hostWhitelist` parameter
+at `/daacs/config/environment.js` then restart DAACS-Web.
+
+Should look like this (change the IP address and domain as appropriate):
+
+    hostWhitelist: [/^165.227.195.157:\d+$/,/^umgc\.daacs\.net:\d+$/,/^umgc\.daacs\.net$/,/^localhost:\d+$/],
+
+Also change:
+
+    ENV.RESTAPI = "https://DAACS_DOMAIN/api";
+
+``` bash
+vi /daacs/config/daacs.properties
+```
 
 Start the installation process.
 
@@ -100,25 +125,11 @@ cd /daacs/install/
 ./install-daacs-all.sh
 ```
 
-To whitelist a hostname for the web component, update the environment.js
-file and add the IP address and domain to the `hostWhitelist` parameter
-at `/usr/local/daacs/DAACS-Web/daacs/config/environment.js` then restart
-DAACS-Web.
+**Note that any changes to `environment.js` will require you to rebuild
+the DAACS-Web:**
 
-``` bash
-vi /usr/local/daacs/DAACS-Web/daacs/config/environment.js
-```
-
-    ...
-    hostWhitelist: [
-        /^wwwc-wgu-daacs.gavant.com$/,
-        /^web-app$/,
-        /^wwwc-excelsior-daacs.gavant.com$/,
-        /^wwwd-daacs.gavant.com:\d+$/,
-        /^localhost:\d+$/,
-        /^159.89.233.238:\d+/
-    ],
-    ...
+    cd /daacs/install
+    ./install-daacs-web.sh
 
 Start the API:
 
@@ -136,3 +147,132 @@ Start the web interface:
 cd /daacs/start/
 ./run-daacs-web.sh
 ```
+
+## Installing Web Server
+
+We will use [nginx](https://nginx.org) webserver to handle secure
+(i.e. https) connections. It will handle all incoming requestsn and
+redirect them to the two DAACS servers (API and web).
+
+``` bash
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx Full'
+systemctl status nginx
+```
+
+Install letsencrypt to create https certificate. Change the domain as
+appropriate (note that nginx should not be running while creating the
+certificate).
+
+``` bash
+sudo systemctl stop nginx
+sudo apt-get -y install letsencrypt
+letsencrypt certonly --standalone -d DAACS_DOMAIN
+```
+
+Edit the nginx configuration file.
+
+``` bash
+vi /daacs/config/nginx.conf
+```
+
+Copy the configuration file to nginx installation directory.
+
+``` bash
+sudo cp /daacs/config/nginx.conf /etc/nginx/nginx.conf
+```
+
+Start nginx.
+
+``` bash
+sudo systemctl start nginx
+```
+
+If all is working, then going to
+<https://DAACS_DOMAIN/api/swagger-ui.html> will return the API
+documentation and <https://DAACS_DOMAIN> will render the DAACS homepage.
+
+## Firewall
+
+You will want to create a firewall the rejects all connections except
+through ports 80 (for http which will be redirected by ngix) and 443
+(for https). You can also allow port 22 to allow ssh connections
+(i.e. to manage the server). Although that can be limited to specific IP
+addresses. The black boxes are the IP addresses of computers that are
+allowed (i.e. whitelisted) to connect to the server on any port. This is
+used to retrieve data directly from the mongo database.
+
+<center>
+<img src='screenshots/DigitalOcean_Firewall1.png' alt='' width='300' />
+</center>
+
+Once a firewall rule is created, you can apply it to any droplets in
+your account.
+
+<center>
+<img src='screenshots/DigitalOcean_Firewall2.png' alt='' width='300' />
+</center>
+
+## Theming
+
+You can theme DAACS to match your desired color scheme. There are two
+variables in `_variables.scss` to control the primary and secondary
+colors, `$themecolor` and `skincolor`, respectively.
+
+``` bash
+vi /usr/local/daacs/DAACS-Web/daacs/app/styles/_variables.scss
+```
+
+Any changes to `_variables.scss` (or DAACS-Web configuration files more
+generally) will require rebuilding the application.
+
+``` bash
+cd /daacs/install
+./install-daacs-web.sh
+```
+
+## Summary Report Downloading
+
+More details to come…
+
+Repo is located here: <https://github.com/DAACS/Summary_Reports>
+
+You can enable users to download PDF summary reports of theiri DAACS
+results. This feature utilizes [Shiny](https://shiny.rstudio.com)
+
+To allow connections from other servers, we need to add the IP address
+to the `mongod.conf` configuration file.
+
+``` bash
+sudo vi /etc/mongod.conf
+```
+
+The section of the `mongod.conf` file should look like this:
+
+    net:
+      port: 27017
+      bindIp: 127.0.0.1,IP_ADDRESS
+
+``` bash
+sudo service mongod restart
+```
+
+``` bash
+sudo systemctl restart shiny-server
+```
+
+    <p><a href="javascript:void(0);" onclick="window.location.href = 'http://dashboard.daacs.net:3838/summaryreport/?userid=' + Ember.Namespace.NAMESPACES.findBy('name', 'daacs').__container__.lookup('service:session').get('user.id');">Click here to download a PDF of your DAACS Results</a></p>
+
+    <p><a href="javascript:void(0);" onclick="window.location.href = 'http://dashboard.daacs.net:3838/summaryreport/?institution=umgc&userid=' + Ember.Namespace.NAMESPACES.findBy('name', 'daacs').__container__.lookup('service:session').get('user.id');">Click here to download a PDF of your DAACS Results</a></p>
+
+## SSO Setup
+
+**Currently not working**
+
+Go to this URL to get <http://umgc.daacs.net/api/saml/metadata>
+
+<http://cuny.daacs.net/api/saml/metadata>
+
+Note that the meta data may have references to <http://localhost:8080>.
+These will need to be changed to use the appropriate domain and mapping
+through NGINX. For example, the API

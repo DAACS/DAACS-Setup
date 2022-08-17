@@ -7,4 +7,6 @@ archive/
 Backup/
 assessments/
 daacs-install/
-configs/
+config/my/
+config/ualbany/
+config/umgc/

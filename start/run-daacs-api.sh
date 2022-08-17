@@ -2,7 +2,7 @@
 
 # Start the API
 figlet -t -k -f /usr/share/figlet/small.flf "Updating daacsapiProperties"
-sudo cp -v daacs.properties /usr/local/daacs/daacs.properties
+sudo cp -v /daacs/config/daacs.properties /usr/local/daacs/daacs.properties
 cd /usr/local/daacs/DAACS-API/
 export daacsapiProperties='/usr/local/daacs/daacs.properties'
 echo $daacsapiProperties

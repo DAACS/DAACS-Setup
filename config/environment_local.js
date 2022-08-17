@@ -6,7 +6,7 @@ module.exports = function(environment) {
     podModulePrefix: 'daacs/pods',
     environment: environment,
     baseURL: '/',
-    RESTAPI: 'http://cuny.daacs.net:8080',
+    RESTAPI: 'https://DAACS_DOMAIN/api',
     locationType: 'auto',
     EmberENV: {
         FEATURES: {
@@ -39,7 +39,7 @@ module.exports = function(environment) {
     },
     fastboot: {
       htmlFile: 'index-configured.html',
-      hostWhitelist: [/^198.199.120.58:\d+$/,/^cuny\.daacs\.net:\d+$/,/^cuny\.daacs\.net$/,/^localhost:\d+$/]
+      hostWhitelist: [/^165.227.195.157:\d+$/,/^165.227.195.157$/,/^umgc\.daacs\.net:\d+$/,/^umgc\.daacs\.net$/,/^localhost:\d+$/]
     },
     scoreDisplay: {
       UNSCORED: '<div class="score-display-dot-path" aria-label="Not Scored"><div class="dot"></div><div classdot"></div><div class="dot"></div></div>',
@@ -52,7 +52,7 @@ module.exports = function(environment) {
         beforeForm: 'If you have any questions about this assessment, or have encountered any technical problems, please fill out and submit the form below.',
         afterForm: ''
     },
-    errorPageContent: "<p>Ooops, looks like there has been an error....</p><p>To report this error please send a detailed description of the issue to <a href=\"mailto:admin@daacs.net?subject=DAACS Application Error\">admin@daacs.net</a>.</p><p>When sending an email please include:<br /><ul><li>Your full name</li><li>Email address used to login to DAACS</li><li>A detailed description of the problem you are encountering</li><li>Any error messages (if any) you are receiving</li></ul></p>",
+    errorPageContent: "<p>Ooops, looks like there has been an error....</p><p>To report this error please send a detailed description of the issue to <a href=\"mailto:admin@daacs.net?subject=DAACS Application Error\">admin@daacs.net</a>.</p><p>When sending an email please include:<br /><ul><li>Your full name</li><li>Email address used to login to DAACS</li><li>A detailed description of the problem you are encountering</li><li>Any error messages (if any) you are receiving</li></ul/p>",
     'ember-error-logger': {
 
     }
@@ -65,7 +65,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV['ember-cli-mirage'].enabled = false;
-    ENV.RESTAPI = 'https://cuny.daacs.net/api';
+    ENV.RESTAPI = 'https://DAACS_DOMAIN/api';
     ENV['ember-simple-auth'].samlLoginEndpoint = ENV.RESTAPI + '/saml/login';
     ENV['ember-simple-auth'].isSaml = false;
     ENV['ember-simple-auth'].allowCreateAccount = true;
@@ -79,8 +79,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'test') {
-    ENV['ember-cli-mirage'].enabled = fal;
-    ENV.RESTAPI = 'https://cuny.daacs.net/api';
+    ENV['ember-cli-mirage'].enabled = false;
+    ENV.RESTAPI = 'https://DAACS_DOMAIN/api';
     ENV['ember-simple-auth'].samlLoginEndpoint = ENV.RESTAPI + '/saml/login';
     ENV['ember-simple-auth'].isSaml = false;
     ENV['simple-auth-oauth2'] = {

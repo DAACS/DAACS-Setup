@@ -11,7 +11,7 @@ phantomjs --version
 
 figlet -t -k -f /usr/share/figlet/small.flf "Installing Python 2"
 #Install Python
-sudo apt install python2.7
+sudo apt install -y python2.7
 ln -s /usr/bin/python2.7 /usr/bin/python
 
 figlet -t -k -f /usr/share/figlet/small.flf "Installing Node"

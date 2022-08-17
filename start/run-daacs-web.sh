@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo cp -v /daacs/start/environment.js /usr/local/daacs/DAACS-Web/daacs/config/environment.js
-
 figlet -t -k -f /usr/share/figlet/small.flf "Starting DAACS-Web"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
