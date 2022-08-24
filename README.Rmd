@@ -23,7 +23,7 @@ For the image, choose Ubuntu version 18.04 (LTS) x64
 
 <center><img src='screenshots/DigitalOcean01_image.png' alt='' width='500' /></center>
 
-Choose the server size. We recommend starting smaller as you can always increase the server size but you cannot reduce the server size if the storage size is smaller. That is, if you create a server with 60GB storage, you can not go to a server with less than 60GB. When you increase server sizes you will have the option to not increase the disk size. This is recommended so you can always reduce the size later, unless of course you need more storage. DAACS does not require a lot of disk storage to save student results.
+Choose the server size. We recommend starting smaller as you can always increase the server size but you cannot reduce the server size if the storage size is smaller. That is, if you create a server with 60GB storage, you can not go to a server with less than 60GB. When you increase server sizes you will have the option to not increase the disk size. This is recommended so you can always reduce the size later, unless of course you need more storage. DAACS does not require a lot of disk storage to save student results. **If using automated essay scoring you will need at least 4gb of RAM**.
 
 <center><img src='screenshots/DigitalOcean03_plan.png' alt='' width='500' /></center>
 
@@ -119,7 +119,7 @@ cd /daacs/start/
 ./run-daacs-api.sh
 ```
 
-If the API starts successfully, you should be able to go to http://X.X.X.X:8080/swagger-ui.html and see the API documentation.
+If the API starts successfully, you should be able to go to http://IP_ADDRESS:8080/swagger-ui.html and see the API documentation.
 
 Start the web interface:
 

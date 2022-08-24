@@ -31,7 +31,8 @@ storage, you can not go to a server with less than 60GB. When you
 increase server sizes you will have the option to not increase the disk
 size. This is recommended so you can always reduce the size later,
 unless of course you need more storage. DAACS does not require a lot of
-disk storage to save student results.
+disk storage to save student results. **If using automated essay scoring
+you will need at least 4gb of RAM**.
 
 <center>
 <img src='screenshots/DigitalOcean03_plan.png' alt='' width='500' />
@@ -89,18 +90,22 @@ git clone https://github.com/DAACS/DAACS-Setup.git .
 Git should be already installed, if not you can install it using
 `sudo apt-get install -y git`.
 
-Edit [`daacs.properties`](start/daacs.properties).
+Edit [`daacs.properties`](config/daacs.properties).
 
 ``` bash
 vi /daacs/config/daacs.properties
 ```
 
 You can change the password for MongoDB in
-[`start/daacs.properties`](start/daacs.properties) and
+[`config/daacs.properties`](config/daacs.properties) and
 [`install/mongo-user.script.js`](install/mongo-user.script.js). However,
 we recommend blocking access to the MongoDB to all IP addresses.
 
 Edit [`environment.js`](config/environment.js)
+
+``` bash
+vi /daacs/config/environment.js
+```
 
 To whitelist a hostname for the web component, update the environment.js
 file and add the IP address and domain to the `hostWhitelist` parameter
@@ -139,7 +144,7 @@ cd /daacs/start/
 ```
 
 If the API starts successfully, you should be able to go to
-<http://X.X.X.X:8080/swagger-ui.html> and see the API documentation.
+<http://IP_ADDRESS:8080/swagger-ui.html> and see the API documentation.
 
 Start the web interface:
 
