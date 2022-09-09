@@ -98,6 +98,12 @@ ENV.RESTAPI = "https://DAACS_DOMAIN/api";
 vi /daacs/config/daacs.properties
 ```
 
+Configure nginx.conf.
+
+```{bash, eval=FALSE}
+vi /daacs/config/nginx.conf
+```
+
 Start the installation process.
 
 ```{bash, eval=FALSE}
@@ -162,7 +168,7 @@ sudo cp /daacs/config/nginx.conf /etc/nginx/nginx.conf
 Start nginx.
 
 ```{bash, eval=FALSE}
-sudo systemctl start nginx
+sudo systemctl restart nginx
 ```
 
 If all is working, then going to https://DAACS_DOMAIN/api/swagger-ui.html will return the API documentation and https://DAACS_DOMAIN will render the DAACS homepage.
