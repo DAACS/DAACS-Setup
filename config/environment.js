@@ -1,5 +1,6 @@
 /* jshint node: true */
-
+// If you modify this file you need to rebuild the DAACS-Web.
+// /daacs/install/install-daacs-web.sh
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'daacs',
