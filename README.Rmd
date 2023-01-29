@@ -286,10 +286,11 @@ sudo systemctl restart shiny-server
 
 **Currently not working**
 
-Go to this URL to get 
-http://umgc.daacs.net/api/saml/metadata
+Go to this URL to get the metadata:
 
-http://cuny.daacs.net/api/saml/metadata
+https://DAACS_DOMAIN/api/saml/metadata
 
-Note that the meta data may have references to http://localhost:8080. These will need to be changed to use the appropriate domain and mapping through NGINX. For example, the API 
+Note that the meta data may have references to http://localhost:8080. These will need to be changed to use the appropriate domain and mapping through NGINX. 
+
+
 
